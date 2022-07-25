@@ -6,6 +6,11 @@ const SimpleInput = () => {
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
+    if (nameInputRef.current.value.trim().length === 0) {
+      // reject empty input only
+      return;
+    }
+
     console.log(nameInputRef.current.value);
   };
 
