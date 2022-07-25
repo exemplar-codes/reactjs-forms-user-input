@@ -1,24 +1,32 @@
-import { useRef } from "react";
+import { useState } from "react";
 
-const SimpleInput = () => {
-  const nameInputRef = useRef();
+const SimpleInput = (props) => {
+  const [enteredName, setEnteredName] = useState("");
+
+  const nameInputChangeHandler = (event) => {
+    setEnteredName(event.target.value);
+  };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
-    if (nameInputRef.current.value.trim().length === 0) {
-      // reject empty input only
-      return;
-    }
+    if (enteredName.trim() === "") return; // ignore empty input
 
-    console.log(nameInputRef.current.value);
+    console.log(enteredName);
+
+    setEnteredName(""); // clear input on successful submision
   };
 
   return (
     <form onSubmit={formSubmissionHandler}>
       <div className="form-control">
         <label htmlFor="name">Your Name</label>
-        <input type="text" id="name" ref={nameInputRef} />
+        <input
+          type="text"
+          id="name"
+          onChange={nameInputChangeHandler}
+          value={enteredName}
+        />
       </div>
       <div className="form-actions">
         <button>Submit</button>
